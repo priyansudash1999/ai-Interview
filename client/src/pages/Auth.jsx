@@ -3,7 +3,19 @@ import { GiMonoWheelRobot } from "react-icons/gi";
 import { GiSparkles } from "react-icons/gi";
 import { FaGoogle } from "react-icons/fa";
 import { motion } from "motion/react"
+import { signInWithPopup } from 'firebase/auth';
+import { provider, auth } from '../utils/firebase';
 const Auth = () => {
+
+  const handleGoogleAuth = async() => {
+    try {
+      const res = await signInWithPopup(auth, provider)
+      console.log(res);
+    } catch (error) {
+        console.error(error);
+    }
+  }
+
   return (
     <div className='bg-[#f8f8f8] w-full min-h-screen flex flex-col items-center justify-center px-6 py-20'>
       
@@ -33,9 +45,10 @@ const Auth = () => {
             Sign In to start AI Powered Interview, track your progress and unlock details performance
         </p>
         <motion.button 
+            onClick={handleGoogleAuth}
             whileHover={{opacity:0.9, scale: 1.04}}
             whileTap={{opacity:1, scale: 0.75}}
-            className='w-full flex items-center justify-center gap-3 py-3 bg-black text-white rounded-full shadow-md'>
+            className='w-full flex items-center justify-center gap-3 py-3 bg-black text-white rounded-full shadow-md cursor-pointer'>
             <FaGoogle size={20} className='text-red-900'/>
             Continue with Google
         </motion.button>

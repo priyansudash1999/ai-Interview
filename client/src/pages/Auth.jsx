@@ -5,12 +5,20 @@ import { FaGoogle } from "react-icons/fa";
 import { motion } from "motion/react"
 import { signInWithPopup } from 'firebase/auth';
 import { provider, auth } from '../utils/firebase';
+import axios from "axios"
+import { serverUrl } from '../App';
+
 const Auth = () => {
 
   const handleGoogleAuth = async() => {
     try {
       const res = await signInWithPopup(auth, provider)
-      console.log(res);
+      let user = res.user
+      let name = user.displayName
+      let email = user.email
+      const result = await axios.post(serverUrl + "/api/auth/google", {name, email}, {withCredentials: true})
+      console.log(result);
+      
     } catch (error) {
         console.error(error);
     }
@@ -53,7 +61,6 @@ const Auth = () => {
             Continue with Google
         </motion.button>
       </motion.div>
-
     </div>
   )
 }

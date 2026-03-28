@@ -6,7 +6,7 @@ import { motion } from "motion/react"
 import { signInWithPopup } from 'firebase/auth';
 import { provider, auth } from '../utils/firebase';
 import axios from "axios"
-import { serverUrl } from '../App';
+import { serverUrl } from '../App.jsx';
 
 const Auth = () => {
 
@@ -17,7 +17,7 @@ const Auth = () => {
       let name = user.displayName
       let email = user.email
       const result = await axios.post(serverUrl + "/api/auth/google", {name, email}, {withCredentials: true})
-      console.log(result);
+      console.log(result.data);
       
     } catch (error) {
         console.error(error);
